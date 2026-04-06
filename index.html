@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>팝업 해제 실험물 - 스크롤 묻힘</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, sans-serif;
+    background: #f5f5f5;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+  }
+
+  .experiment-wrap {
+    width: 100%;
+    max-width: 1000px;
+    background: #fff;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .condition-banner {
+    background: #1a1a2e;
+    color: #fff;
+    text-align: center;
+    padding: 8px;
+    font-size: 12px;
+    letter-spacing: 1px;
+  }
+
+  .condition-banner strong {
+    color: #f0c040;
+    font-size: 13px;
+  }
+
+  .shopping-bg {
+    width: 100%;
+    height: 600px;
+    background-image: url("쇼핑몰배경이미지.png");
+    background-size: cover;
+    background-position: top center;
+    overflow-y: scroll;
+    position: relative;
+  }
+
+  .scroll-spacer {
+    height: 1200px;
+  }
+
+  .popup-overlay {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+  }
+
+  .popup-overlay.visible {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  .popup-box {
+    position: relative;
+    width: 420px;
+    max-width: 90%;
+  }
+
+  .popup-box img {
+    width: 100%;
+    border-radius: 8px;
+    display: block;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.4);
+  }
+
+  .hint {
+    position: absolute;
+    bottom: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0,0,0,0.6);
+    color: #fff;
+    font-size: 11px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    letter-spacing: 1px;
+    pointer-events: none;
+    white-space: nowrap;
+  }
+</style>
+</head>
+<body>
+
+<div class="experiment-wrap">
+
+  <div class="condition-banner">
+    실험 조건 <strong>스크롤 묻힘</strong>
+  </div>
+
+  <div class="shopping-bg" id="shoppingBg">
+    <div class="scroll-spacer"></div>
+
+    <div class="popup-overlay" id="popupOverlay">
+      <div class="popup-box">
+        <img src="팝업광고.png" alt="팝업 광고">
+      </div>
+    </div>
+
+    <div class="hint">↓ 아래로 스크롤하면 팝업이 사라집니다</div>
+  </div>
+
+</div>
+
+<script>
+  function showPopup() {
+    document.getElementById("popupOverlay").classList.add("visible");
+  }
+
+  function dismissPopup() {
+    document.getElementById("popupOverlay").classList.remove("visible");
+    bg.removeEventListener("scroll", scrollHandler);
+  }
+
+  const bg = document.getElementById("shoppingBg");
+
+  function scrollHandler() {
+    if (bg.scrollTop > 120) dismissPopup();
+  }
+
+  window.addEventListener("load", function() {
+    bg.scrollTop = 0;
+    bg.addEventListener("scroll", scrollHandler);
+    setTimeout(showPopup, 1000);
+  });
+</script>
+
+</body>
+</html>
