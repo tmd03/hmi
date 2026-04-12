@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <h1>Hello, World!</h1>
+    <div id="emoji" style="font-size:8rem">😴</div>
+    <div id="popup" hidden>
+      <p>Hi, there?</p>
+      <button onclick="closePopup()">thanks!</button>
+    </div>
+
+    <script>
+      setTimeout(function() {
+        document.getElementById('popup').hidden = false;
+      }, 3000);
+
+      function closePopup() {
+          document.getElementById('popup').hidden=true;
+          document.getElementById('emoji').textContent='☺️';
+        }
+    </script>
+  </body>
+</html>
